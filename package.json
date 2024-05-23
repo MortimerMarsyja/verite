@@ -1,6 +1,6 @@
 {
   "name": "@mortimer_marsyja/verite",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A signal based state management library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
