@@ -13,8 +13,7 @@ declare class SignalWrapper<TYPE> {
 export declare function createBoutique<TYPE extends {
 	[KEY in keyof TYPE]: any;
 }>(initialState: TYPE): {
-	createSignal: <KEY extends keyof TYPE>(key: KEY, value: TYPE[KEY]) => void;
-	updateSignal: <KEY_1 extends keyof TYPE>(key: KEY_1, value: TYPE[KEY_1]) => void;
+	updateSignal: <KEY extends keyof TYPE>(key: KEY, value: TYPE[KEY]) => void;
 	getSignal: <KEY extends keyof TYPE>(key: KEY) => SignalWrapper<TYPE[KEY]>;
 };
 
