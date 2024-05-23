@@ -1,16 +1,20 @@
 {
   "name": "library",
-  "version": "1.0.0",
+  "version": "1.0.0 beta",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "bun run build.mjs",
     "prepublishOnly": "bun run build"
   },
-  "keywords": [],
-  "author": "",
+  "files":["dist"],
+  "keywords": ["signals","state","store","preact","reactive","observable","signal","state management","state container","state management library","state container library","state management solution","state container solution","state management tool","state container tool","state management package","state container package","state management module","state container module","state management plugin","state container plugin","state management extension","state container extension","state management library for preact","state container library for preact","state management solution for preact","state container solution for preact","state management tool for preact","state container tool for preact","state management package for preact","state container package for preact","state management module for preact","state container module for preact","state management plugin for preact","state container plugin for preact","state management extension for preact","state container extension for preact"],
+  "author": "MortimerMarsyja",
   "license": "ISC",
   "dependencies": {
     "@preact/signals-core": "^1.6.0"
+  },
+  "devDependencies": {
+    "bun-plugin-dts": "^0.2.3"
   }
 }
