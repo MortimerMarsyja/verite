@@ -4,6 +4,7 @@ import createBoutique from "../src";
 const exampleInitialState = {
   user: "John",
   isAdmin: false,
+  counter: 0,
 };
 
 describe("should", () => {
@@ -21,6 +22,12 @@ describe("should", () => {
     const boutique = createBoutique(exampleInitialState);
     boutique.updateSignal("user", "John");
     expect(boutique.getSignal("user").value).toEqual("John");
+  });
+
+  it("add value to counter", () => {
+    const boutique = createBoutique(exampleInitialState);
+    boutique.updateSignal("counter", boutique.getSignal("counter").value + 1);
+    expect(boutique.getSignal("counter").value).toEqual(1);
   });
 
   it("throw an error if signal not found", () => {
