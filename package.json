@@ -1,6 +1,6 @@
 {
   "name": "library",
-  "version": "1.0.0 beta",
+  "version": "0.0.0",
   "description": "A signal based state management library",
   "main": "dist/index.js",
   "types":"dist/index.d.ts",
