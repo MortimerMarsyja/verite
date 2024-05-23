@@ -53,7 +53,8 @@
   "author": "MortimerMarsyja",
   "license": "ISC",
   "dependencies": {
-    "@preact/signals-core": "^1.6.0"
+    "@preact/signals-core": "^1.6.0",
+    "bun": "^1.1.9"
   },
   "devDependencies": {
     "bun-plugin-dts": "^0.2.3"

@@ -2,20 +2,6 @@ import { BoutiqueCore, CoreState } from "../core/stateManagement";
 
 export type Signal<TYPE> = CoreState<TYPE>;
 
-export class SignalWrapper<TYPE> {
-  // not sure I like this, but it's the only way to get intellisense
-  private signal: Signal<TYPE>;
-  constructor(signal: Signal<TYPE>) {
-    this.signal = signal;
-  }
-  get value(): TYPE {
-    return this.signal.value;
-  }
-  set value(value: TYPE) {
-    this.signal.value = value;
-  }
-}
-
 export class BoutiqueCoreAccessor<TYPE extends { [KEY in keyof TYPE]: any }> {
   private coreManager: BoutiqueCore<TYPE>;
   constructor(initialState: TYPE) {
@@ -36,10 +22,8 @@ export class BoutiqueCoreAccessor<TYPE extends { [KEY in keyof TYPE]: any }> {
     this.coreManager.updateSignal(key, value);
   }
 
-  getSignal<KEY extends keyof TYPE>(key: KEY): SignalWrapper<TYPE[KEY]> {
-    return this.coreManager.getSignal(key) as unknown as SignalWrapper<
-      TYPE[KEY]
-    >;
+  getSignal<KEY extends keyof TYPE>(key: KEY) {
+    return this.coreManager.getSignal(key);
   }
 }
 
