@@ -1,8 +1,9 @@
 {
   "name": "library",
   "version": "1.0.0 beta",
-  "description": "",
-  "main": "index.js",
+  "description": "A signal based state management library",
+  "main": "dist/index.js",
+  "types":"dist/index.d.ts",
   "scripts": {
     "build": "bun run build.mjs",
     "prepublishOnly": "bun run build"
