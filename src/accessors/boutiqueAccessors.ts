@@ -26,5 +26,3 @@ export class BoutiqueCoreAccessor<TYPE extends { [KEY in keyof TYPE]: any }> {
     return this.coreManager.getSignal(key);
   }
 }
-
-export default BoutiqueCoreAccessor;
