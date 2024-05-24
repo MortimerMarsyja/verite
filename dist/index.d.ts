@@ -4,9 +4,9 @@ export declare function createBoutique<TYPE extends {
 	[KEY in keyof TYPE]: any;
 }>(initialState: TYPE): {
 	updateSignal: <KEY extends keyof TYPE>(key: KEY, value: TYPE[KEY]) => void;
-	getSignal: <KEY extends keyof TYPE>(key: KEY) => {
-		[KEY_1 in keyof TYPE]: import("@preact/signals-core").Signal<TYPE[KEY_1]>;
-	}[KEY];
+	boutique: {
+		[KEY in keyof TYPE]: import("@preact/signals-core").Signal<TYPE[KEY]>;
+	};
 };
 
 export {
