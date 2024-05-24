@@ -7,6 +7,13 @@ const exampleInitialState = {
   counter: 0,
 };
 
+const upStoreFourTimes = (boutique: ReturnType<typeof createBoutique>) => {
+  for (let i = 0; i < 4; i++) {
+    const countSignal = boutique.getSignal("counter");
+    boutique.updateSignal("counter", countSignal.value + 2);
+  }
+};
+
 describe("should", () => {
   it("create a boutique", () => {
     const boutique = createBoutique(exampleInitialState);
@@ -30,10 +37,21 @@ describe("should", () => {
     expect(boutique.getSignal("counter").value).toEqual(1);
   });
 
+  it("add value to counter four times", () => {
+    const boutique = createBoutique(exampleInitialState);
+    upStoreFourTimes(boutique);
+    expect(boutique.getSignal("counter").value).toEqual(4);
+  });
+
   it("throw an error if signal not found", () => {
     const boutique = createBoutique(exampleInitialState);
     // to test the error we need to ignore the type
     // @ts-ignore
     expect(() => boutique.getSignal("level")).toThrow();
+  });
+
+  it("throw an error if boutique already exists", () => {
+    createBoutique(exampleInitialState);
+    expect(() => createBoutique(exampleInitialState)).toThrow();
   });
 });

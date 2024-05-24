@@ -7,7 +7,7 @@ export function createBoutique<TYPE extends { [KEY in keyof TYPE]: any }>(
   return {
     updateSignal: <KEY extends keyof TYPE>(key: KEY, value: TYPE[KEY]) =>
       accessor.updateSignal(key, value),
-    getSignal: <KEY extends keyof TYPE>(key: KEY) => accessor.getSignal(key),
+    boutique: accessor.boutique,
   };
 }
 

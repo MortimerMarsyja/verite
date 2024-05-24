@@ -1,7 +1,6 @@
-import { BoutiqueCore, CoreState } from "../core/stateManagement";
+import { BoutiqueCore, CoreState } from "../core/core";
 
 export type Signal<TYPE> = CoreState<TYPE>;
-
 export class BoutiqueCoreAccessor<TYPE extends { [KEY in keyof TYPE]: any }> {
   private coreManager: BoutiqueCore<TYPE>;
   constructor(initialState: TYPE) {
@@ -10,19 +9,12 @@ export class BoutiqueCoreAccessor<TYPE extends { [KEY in keyof TYPE]: any }> {
       this.coreManager.createSignal(key, initialState[key]);
     }
   }
-
-  createSignal<KEY extends keyof TYPE>(key: KEY, value: TYPE[KEY]) {
-    if (this.coreManager.getSignal(key)) {
-      throw new Error(`Signal ${String(key)} already exists`);
-    }
-    this.coreManager.createSignal(key, value);
+  // return store signals object
+  get boutique() {
+    return this.coreManager.signalsBoutique;
   }
 
   updateSignal<KEY extends keyof TYPE>(key: KEY, value: TYPE[KEY]) {
     this.coreManager.updateSignal(key, value);
-  }
-
-  getSignal<KEY extends keyof TYPE>(key: KEY) {
-    return this.coreManager.getSignal(key);
   }
 }
