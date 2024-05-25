@@ -3,7 +3,7 @@
 export declare function createBoutique<TYPE extends {
 	[KEY in keyof TYPE]: any;
 }>(initialState: TYPE): {
-	updateSignal: <KEY extends keyof TYPE>(key: KEY, value: TYPE[KEY]) => void;
+	updateItem: <KEY extends keyof TYPE>(key: KEY, value: TYPE[KEY]) => void;
 	boutique: {
 		[KEY in keyof TYPE]: import("@preact/signals-core").Signal<TYPE[KEY]>;
 	};

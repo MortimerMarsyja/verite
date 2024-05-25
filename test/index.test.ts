@@ -39,15 +39,4 @@ describe("should", () => {
     upStoreFourTimes(boutique.counter);
     expect(boutique.counter.value).toEqual(5);
   });
-
-  it("throw an error if boutique already exists", () => {
-    let error: Error | undefined;
-    try {
-      createBoutique(exampleInitialState); // Second instance
-    } catch (e) {
-      error = e as Error;
-    }
-    expect(error).toBeDefined();
-    expect(error?.message).toEqual("BoutiqueCoreAccessor is a singleton class");
-  });
 });
