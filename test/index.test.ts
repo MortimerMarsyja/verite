@@ -1,6 +1,6 @@
 import { describe, it, expect } from "bun:test";
 import createBoutique from "../src";
-import { Signal } from "@preact/signals-core";
+import type { Signal } from "@preact/signals-core";
 
 const exampleInitialState = {
   user: "John",
@@ -14,7 +14,7 @@ const upStoreFourTimes = (countSignal: Signal) => {
   }
 };
 
-const { boutique, updateItem } = createBoutique(exampleInitialState);
+const { boutique } = createBoutique(exampleInitialState);
 
 describe("should", () => {
   it("create a boutique", () => {
@@ -26,12 +26,12 @@ describe("should", () => {
   });
 
   it("update a signal", () => {
-    updateItem("user", "John Doe");
+    boutique.user.value = "John Doe";
     expect(boutique.user.value).toEqual("John Doe");
   });
 
   it("add value to counter", () => {
-    updateItem("counter", 1);
+    boutique.counter.value = 1;
     expect(boutique.counter.value).toEqual(1);
   });
 

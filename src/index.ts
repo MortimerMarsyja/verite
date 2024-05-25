@@ -1,12 +1,12 @@
 import { BoutiqueCoreAccessor } from "./accessors/boutiqueAccessors";
 
-export function createBoutique<TYPE extends { [KEY in keyof TYPE]: any }>(
+export function createBoutique<TYPE extends object>(
   initialState: TYPE
 ) {
   const accessor = new BoutiqueCoreAccessor(initialState);
+
   return {
-    updateItem: <KEY extends keyof TYPE>(key: KEY, value: TYPE[KEY]) =>
-      accessor.updateSignal(key, value),
+    updateItem: accessor.updateSignal,
     boutique: accessor.boutique,
   };
 }
