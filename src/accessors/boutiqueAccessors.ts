@@ -1,7 +1,9 @@
 import { BoutiqueCore, CoreState } from "../core/core";
 
 export type Signal<TYPE> = CoreState<TYPE>;
-export class BoutiqueCoreAccessor<TYPE extends { [KEY in keyof TYPE]: any }> {
+export class BoutiqueCoreAccessor<
+  TYPE extends { [KEY in keyof TYPE]: TYPE[KEY] }
+> {
   private static instance: BoutiqueCoreAccessor<any>;
 
   private coreManager: BoutiqueCore<TYPE>;
