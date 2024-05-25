@@ -1,17 +1,19 @@
-import { BoutiqueCore, CoreState } from "../core/core";
+import { BoutiqueCore, type CoreState } from "../core/core";
 
 export type Signal<TYPE> = CoreState<TYPE>;
 export class BoutiqueCoreAccessor<
-  TYPE extends { [KEY in keyof TYPE]: TYPE[KEY] }
+  TYPE extends object,
 > {
-  private static instance: BoutiqueCoreAccessor<any>;
+  // private static instance: BoutiqueCoreAccessor<any>;
 
   private coreManager: BoutiqueCore<TYPE>;
+
   constructor(initialState: TYPE) {
-    if (BoutiqueCoreAccessor.instance) {
-      BoutiqueCoreAccessor.instance = this;
-    }
+    // if (BoutiqueCoreAccessor.instance) {
+    //   BoutiqueCoreAccessor.instance = this;
+    // }
     this.coreManager = new BoutiqueCore<TYPE>();
+
     for (const key in initialState) {
       this.coreManager.createSignal(key, initialState[key]);
     }
