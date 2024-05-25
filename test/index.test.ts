@@ -14,7 +14,7 @@ const upStoreFourTimes = (countSignal: Signal) => {
   }
 };
 
-const { boutique, updateSignal } = createBoutique(exampleInitialState);
+const { boutique, updateItem } = createBoutique(exampleInitialState);
 
 describe("should", () => {
   it("create a boutique", () => {
@@ -26,12 +26,12 @@ describe("should", () => {
   });
 
   it("update a signal", () => {
-    updateSignal("user", "John Doe");
+    updateItem("user", "John Doe");
     expect(boutique.user.value).toEqual("John Doe");
   });
 
   it("add value to counter", () => {
-    updateSignal("counter", 1);
+    updateItem("counter", 1);
     expect(boutique.counter.value).toEqual(1);
   });
 

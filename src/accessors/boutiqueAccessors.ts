@@ -9,9 +9,8 @@ export class BoutiqueCoreAccessor<
   private coreManager: BoutiqueCore<TYPE>;
   constructor(initialState: TYPE) {
     if (BoutiqueCoreAccessor.instance) {
-      throw new Error("BoutiqueCoreAccessor is a singleton class");
+      BoutiqueCoreAccessor.instance = this;
     }
-    BoutiqueCoreAccessor.instance = this;
     this.coreManager = new BoutiqueCore<TYPE>();
     for (const key in initialState) {
       this.coreManager.createSignal(key, initialState[key]);
