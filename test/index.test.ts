@@ -1,5 +1,6 @@
-import { describe, it, expect } from "bun:test";
+import { describe, it, expect, beforeEach } from "bun:test";
 import createBoutique from "../src";
+import { Signal } from "@preact/signals-core";
 
 const exampleInitialState = {
   user: "John",
@@ -7,51 +8,46 @@ const exampleInitialState = {
   counter: 0,
 };
 
-const upStoreFourTimes = (boutique: ReturnType<typeof createBoutique>) => {
+const upStoreFourTimes = (countSignal: Signal) => {
   for (let i = 0; i < 4; i++) {
-    const countSignal = boutique.getSignal("counter");
-    boutique.updateSignal("counter", countSignal.value + 2);
+    countSignal.value = countSignal.value + 1;
   }
 };
 
+const { boutique, updateSignal } = createBoutique(exampleInitialState);
+
 describe("should", () => {
   it("create a boutique", () => {
-    const boutique = createBoutique(exampleInitialState);
     expect(boutique).toBeDefined();
   });
 
-  it("get a signal", () => {
-    const boutique = createBoutique(exampleInitialState);
-    expect(boutique.getSignal("isAdmin").value).toEqual(false);
+  it("get a signal counter signal", () => {
+    expect(boutique.counter).toBeDefined();
   });
 
   it("update a signal", () => {
-    const boutique = createBoutique(exampleInitialState);
-    boutique.updateSignal("user", "John");
-    expect(boutique.getSignal("user").value).toEqual("John");
+    updateSignal("user", "John Doe");
+    expect(boutique.user.value).toEqual("John Doe");
   });
 
   it("add value to counter", () => {
-    const boutique = createBoutique(exampleInitialState);
-    boutique.updateSignal("counter", boutique.getSignal("counter").value + 1);
-    expect(boutique.getSignal("counter").value).toEqual(1);
+    updateSignal("counter", 1);
+    expect(boutique.counter.value).toEqual(1);
   });
 
   it("add value to counter four times", () => {
-    const boutique = createBoutique(exampleInitialState);
-    upStoreFourTimes(boutique);
-    expect(boutique.getSignal("counter").value).toEqual(4);
-  });
-
-  it("throw an error if signal not found", () => {
-    const boutique = createBoutique(exampleInitialState);
-    // to test the error we need to ignore the type
-    // @ts-ignore
-    expect(() => boutique.getSignal("level")).toThrow();
+    upStoreFourTimes(boutique.counter);
+    expect(boutique.counter.value).toEqual(5);
   });
 
   it("throw an error if boutique already exists", () => {
-    createBoutique(exampleInitialState);
-    expect(() => createBoutique(exampleInitialState)).toThrow();
+    let error: Error | undefined;
+    try {
+      createBoutique(exampleInitialState); // Second instance
+    } catch (e) {
+      error = e as Error;
+    }
+    expect(error).toBeDefined();
+    expect(error?.message).toEqual("BoutiqueCoreAccessor is a singleton class");
   });
 });
