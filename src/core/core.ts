@@ -8,7 +8,7 @@ export class BoutiqueCore<TYPE extends { [KEY in keyof TYPE]: any }> {
     return (this.signalsBoutique[key] = signal(value));
   }
   updateSignal<KEY extends keyof TYPE>(key: KEY, value: TYPE[KEY]) {
-    this.signalsBoutique[key] = signal(value);
+    this.signalsBoutique[key] = value;
   }
 }
 
