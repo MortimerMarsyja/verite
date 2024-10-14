@@ -1,6 +1,10 @@
-import { describe, it, expect } from "bun:test";
-import createBoutique from "../src";
-import type { Signal } from "@preact/signals-core";
+import { describe, it, expect, beforeEach } from "bun:test";
+import { Signal } from "@preact/signals-core";
+import mockBoutique from "./mocks/mockBoutique";
+import {
+  BoutiqueAccessor,
+  createBoutique,
+} from "../src/accessors/boutiqueAccessors";
 
 const exampleInitialState = {
   user: "John",
@@ -8,35 +12,49 @@ const exampleInitialState = {
   counter: 0,
 };
 
-const upStoreFourTimes = (countSignal: Signal) => {
+const upStoreFourTimes = (countSignal: Signal<number>) => {
   for (let i = 0; i < 4; i++) {
     countSignal.value = countSignal.value + 1;
   }
 };
 
-const { boutique } = createBoutique(exampleInitialState);
-
 describe("should", () => {
+  beforeEach(() => {
+    BoutiqueAccessor.resetInstance();
+  });
+
   it("create a boutique", () => {
-    expect(boutique).toBeDefined();
+    expect(mockBoutique.items).toBeDefined();
   });
 
   it("get a signal counter signal", () => {
-    expect(boutique.counter).toBeDefined();
+    expect(mockBoutique.items.counter).toBeDefined();
   });
 
   it("update a signal", () => {
-    boutique.user.value = "John Doe";
-    expect(boutique.user.value).toEqual("John Doe");
+    mockBoutique.items.user.value = "John Doe";
+    expect(mockBoutique.items.user.value).toEqual("John Doe");
   });
 
   it("add value to counter", () => {
-    boutique.counter.value = 1;
-    expect(boutique.counter.value).toEqual(1);
+    mockBoutique.items.counter.value = 1;
+    expect(mockBoutique.items.counter.value).toEqual(1);
   });
 
   it("add value to counter four times", () => {
-    upStoreFourTimes(boutique.counter);
-    expect(boutique.counter.value).toEqual(5);
+    upStoreFourTimes(mockBoutique.items.counter);
+    expect(mockBoutique.items.counter.value).toEqual(5);
+  });
+
+  it("throw an error if boutique already exists", () => {
+    let error: Error | undefined;
+    try {
+      createBoutique(exampleInitialState); // First instance
+      createBoutique(exampleInitialState); // Second instance
+    } catch (e) {
+      error = e as Error;
+    }
+    expect(error).toBeDefined();
+    expect(error?.message).toEqual("BoutiqueAccessor is a singleton class");
   });
 });
